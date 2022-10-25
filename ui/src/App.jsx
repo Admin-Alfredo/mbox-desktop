@@ -159,6 +159,7 @@ function App() {
       <p>{isLoading ? "Loading" : "Completed"}</p>
       {(isSearch ? playlistSearch : playlist)?.map((track, index) => (
         <div key={index}
+          title={track.source}
           style={{ cursor: "pointer" }}
           onDoubleClick={() => addTrackToPlayer(track)}
           onClick={(event) => selectedTrack(track, event)}>
