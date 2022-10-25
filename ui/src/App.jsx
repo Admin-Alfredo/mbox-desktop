@@ -14,17 +14,19 @@ function App() {
 
   useEffect(() => {
 
-    audio.current.addEventListener('ended', (e) => handlerForwardTrackPlaylist())
-    audio.current.addEventListener('play', () => setIsPlay(true))
-    audio.current.addEventListener('play', () => setIsPlay(true))
-    audio.current.addEventListener('emptied', (e) => console.log(e))
-    window.addEventListener('keydown', function (e) {
+    audio.current.addEventListener('ended', (e) => {
+      handlerForwardTrackPlaylist(playlist)
+    })
+    audio.current.onplay = () => setIsPlay(true)
+    audio.current.onemptied = (e) => console.log(e)//audio loaded
+
+    window.onkeydown = function (e) {
       if (e.key === "Enter") {
         const [trackSelectedForPlayer] = playlist.filter(track => track.selected)
         if (!trackSelectedForPlayer) return;
         return addTrackToPlayer(trackSelectedForPlayer)
       }
-    })
+    }
 
     async function fetchMusicas() {
       setIsLoading(true)
@@ -67,9 +69,7 @@ function App() {
       return item
     }))
   }, [setPlaylist])
-  const addTrackAsUrlToPlayer = function (url) {
-    audio.current.src = url
-  }
+
   const selectedTrack = useCallback(function (track, e) {
     setPlaylist(items => items.map(item => {
       if (item.File.name == track.File.name) {
@@ -90,6 +90,7 @@ function App() {
 
   const handlerChangeAudioFile = function (e) {
     e.target.files.map((blob) => {
+      console.log(blob)
       const url = URL.createObjectURL(blob)
       addTrackPlaylist({
         File: blob,
@@ -99,32 +100,33 @@ function App() {
       })
     })
   }
-  const handlerForwardTrackPlaylist = function (e) {
-    if (!playlist.length)
+  const handlerForwardTrackPlaylist = function (_playlist = []) {
+    if (!_playlist.length)
       return;
-    const [trackPlayer] = playlist.filter((track) => (track.isPlay))
+    const [trackPlayer] = _playlist.filter((track) => (track.isPlay))
 
     if (!trackPlayer)
       return addTrackToPlayer(playlist[0])
 
-    const indexOfTrackPlayer = playlist.indexOf(trackPlayer)
-    const nextTrackPlayer = playlist[indexOfTrackPlayer + 1] ?
-      playlist[indexOfTrackPlayer + 1] :
-      playlist[0]
+    const indexOfTrackPlayer = _playlist.indexOf(trackPlayer)
+    const nextTrackPlayer = _playlist[indexOfTrackPlayer + 1] ?
+      _playlist[indexOfTrackPlayer + 1] :
+      _playlist[0]
     return addTrackToPlayer(nextTrackPlayer)
   }
-  const handlerPreviuesTrackPlaylist = function (e) {
-    if (!playlist.length)
+
+  const handlerPreviuesTrackPlaylist = function (_playlist) {
+    if (!_playlist.length)
       return;
-    const [trackPlayer] = playlist.filter((track) => (track.isPlay))
+    const [trackPlayer] = _playlist.filter((track) => (track.isPlay))
 
     if (!trackPlayer)
       return addTrackToPlayer(playlist[0])
 
-    const indexOfTrackPlayer = playlist.indexOf(trackPlayer)
-    const nextTrackPlayer = playlist[indexOfTrackPlayer - 1] ?
-      playlist[indexOfTrackPlayer - 1] :
-      playlist[0]
+    const indexOfTrackPlayer = _playlist.indexOf(trackPlayer)
+    const nextTrackPlayer = _playlist[indexOfTrackPlayer - 1] ?
+      _playlist[indexOfTrackPlayer - 1] :
+      _playlist[0]
     return addTrackToPlayer(nextTrackPlayer)
   }
 
@@ -142,9 +144,9 @@ function App() {
         ref={audio}
         src="/audio/Henry_Jackman.mp3" type="audio/mpeg">
       </audio>
-      <button onClick={handlerPreviuesTrackPlaylist}> previues track</button>
+      <button onClick={() => handlerPreviuesTrackPlaylist(playlist)}> previues track</button>
       <button onClick={handlerAudioPlay}>{isPlay ? "pause" : "play"}</button>
-      <button onClick={handlerForwardTrackPlaylist}>forward track</button>
+      <button onClick={() => handlerForwardTrackPlaylist(playlist)}>forward track</button>
 
       {/* <button onClick={() =>{
        

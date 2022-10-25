@@ -19,7 +19,6 @@ exports.getDirMusic = async function () {
     } else {
       return rej(new Error("Directorio Music não existe"))
     }
-
   })
 
 }

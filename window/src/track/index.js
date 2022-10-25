@@ -10,6 +10,9 @@ class Track{
     const directorySplited = path.dirname(this.source).split(path.sep)
     this.dirname = directorySplited[directorySplited.length - 1]
     this.fullDirname = path.dirname(this.source)
+    this.isPlay = false
+    this.selected = false
+    this.type = `audio/${this.File.ext}`
   }
 }
 module.exports = Track
