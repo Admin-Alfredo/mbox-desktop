@@ -101,6 +101,7 @@ function App() {
     })
   }
   const handlerForwardTrackPlaylist = function (_playlist = []) {
+    console.log(_playlist)
     if (!_playlist.length)
       return;
     const [trackPlayer] = _playlist.filter((track) => (track.isPlay))
