@@ -21,13 +21,16 @@ function App() {
   const audio = useRef()
 
   useEffect(() => {
-    window.electronAPI.onUpdatePlaylist(function (tracks) {
-      tracks.map(track => addTrackPlaylist(track))
-    })
+    async function fetchMusicas() {
+      setIsLoading(true)
+      const tracksOfUser = await window.electronAPI.getTrackForUpdatePlaylist()
+      setIsLoading(false)
+      console.log(tracksOfUser)
+      tracksOfUser.forEach(track => addTrackPlaylist(track))
+    }
+    fetchMusicas()
   }, [])
-  useEffect(function(){
-    console.log(folders)
-  },[folders])
+
   useEffect(() => {
     audio.current.addEventListener('ended', (e) => {
       handlerForwardTrackPlaylist(playlist)
@@ -42,17 +45,6 @@ function App() {
         return addTrackToPlayer(trackSelectedForPlayer)
       }
     }
-
-
-    // console.log
-    // async function fetchMusicas() {
-    //   setIsLoading(true)
-    //   const tracksOfUser = await window.electronAPI.getHomedir()
-    //   setIsLoading(false)
-    //   console.log(tracksOfUser)
-    //   tracksOfUser.forEach(track => addTrackPlaylist(track))
-    // }
-    // fetchMusicas()
   }, [])
   const handlerAudioPlay = function () {
     if (!audio.current.paused) {
@@ -66,7 +58,7 @@ function App() {
   }
   const addNewFolder = useCallback(function (folder) {
     setFolders(items => {
-      const [hasFolder] = items.filter(item =>(
+      const [hasFolder] = items.filter(item => (
         item.fulldirname == folder.fulldirname &&
         item.dirname == folder.dirname
       ))
@@ -79,30 +71,14 @@ function App() {
   }, [setFolders])
 
   const insertTrackRelativeFolder = function (track) {
-    
-    const [hasFolder] = folders.filter(folder => (
-      folder.fulldirname == track.fulldirname
-      // folder.dirname == track.dirname
-    ))
-    console.log(hasFolder)
-    if (!hasFolder) {
-      const folder = new Folder(track.dirname, track.fulldirname)
-      folder.addTrack(track)
-      addNewFolder(folder)
-      return;
-    }
-    hasFolder.addTrack(track)
-    addNewFolder(hasFolder)
+
   }
+
   const addTrackPlaylist = useCallback(function (track) {
-    
-    insertTrackRelativeFolder(track)
     setPlaylist(items => {
       const [hasFile] = items.filter(item => item.File.name == track.File.name)
-      if (!hasFile) {
-        
+      if (!hasFile)
         return [...items, track]
-      }
       return [...items]
     })
   }, [setPlaylist])
@@ -207,7 +183,7 @@ function App() {
         onFocus={() => setIsSearch(true)}
         onBlur={() => setIsSearch(false)} />
       <p>{isLoading ? "Loading" : "Completed"}</p>
-      {(isSearch ? playlistSearch : playlist)?.map((track, index) => (
+      {/* {(isSearch ? playlistSearch : playlist)?.map((track, index) => (
         <div key={index}
           title={track.source}
           style={{ cursor: "pointer" }}
@@ -217,6 +193,16 @@ function App() {
           {track.isPlay ?
             <span style={{ color: 'red' }}> {track.File.name}</span> :
             <span style={{ color: track.selected ? 'blue' : 'black' }}>{track.File.name}</span>}
+        </div>
+      ))} */}
+      {folders.map(folder => (
+        <div>
+          <h2>{folder.dirname}</h2>
+          <div style={{ padding: '0px 0px 0px 15px' }}>
+            {folder.getFiles().map(track => (
+              <div>{track.File.name}</div>
+            ))}
+          </div>
         </div>
       ))}
       <input type="file" onChange={handlerChangeAudioFile} accept="audio/*" multiple />

@@ -17,6 +17,9 @@ export default class Folder {
       })
     }
   }
+  getFiles(){
+    return this.#files
+  }
   existTrack(track) {
     const [hasTrack] = this.#files.filter(_track => _track.File.name == track.File.name)
     if (!hasTrack)

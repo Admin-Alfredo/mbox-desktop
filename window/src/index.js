@@ -3,7 +3,7 @@ const isDev = require("electron-is-dev")
 const os = require('os');
 const path = require('path');
 const { getMusicasOfDirectory } = require('./directory');
-const Track = require('./track');
+const {emitter: TrackEmitter} = require('./track');
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-next-line global-require
 if (require('electron-squirrel-startup')) {
@@ -12,7 +12,6 @@ if (require('electron-squirrel-startup')) {
 
 const createWindow = () => {
   // Create the browser window.
-  console.log(os.homedir())
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -21,23 +20,14 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  // ipcMain.on('set-title', (event, title) => {
-  //   const webContents = event.sender
-  //   const win = BrowserWindow.fromWebContents(webContents)
-  //   win.setTitle(title)
-  // })
-
+  
   // and load the index.html of the app.
   if (isDev) {
     mainWindow.loadURL(`http://127.0.0.1:5173/`)
   } else {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
   }
-  Track.emitter.on('add-track', (track) => {
-    mainWindow.webContents.send('update-playlist', track)
-  })
-  ipcMain.on('reflesh-playlist', () =>  getMusicasOfDirectory(path.join(os.homedir(), 'Music')))
-
+ 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };
@@ -46,8 +36,11 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  const trackList = []
+  // (track) => trackList.push(track)
+  getMusicasOfDirectory(path.join(os.homedir(), 'Music'), (track) => trackList.push(track) )
+  ipcMain.handle('update-playlist:init', () => trackList)
   createWindow()
-  getMusicasOfDirectory(path.join(os.homedir(), 'Music'))
 })
 // app.on('ready', () => {
 //   // ipcMain.handle('get:homedir', () => {
