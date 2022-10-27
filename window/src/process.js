@@ -27,6 +27,9 @@ function getMusicasOfDirectory(directory) {
 		return;
 	}
 }
+
+
+
 getMusicasOfDirectory(path.join(homedir(), `Music`))
 	// async function getDirMusic() {
 	// 	return new Promise((res, rej) => {

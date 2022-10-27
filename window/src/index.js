@@ -34,17 +34,10 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
   }
   Track.emitter.on('add-track', (track) => {
-    // console.log(track)
     mainWindow.webContents.send('update-playlist', track)
   })
-  
-  // ipcMain.on('ready-get-track', (event, arg) => {
-  //   console.log(arg)
-  //   // Track.emitter.on('add-track', (track) => {
-  //     event.reply('update-playlist', {})
-  //   // })
-  //   // event.reply('update-playlist', 'pong')
-  // })  
+  ipcMain.on('reflesh-playlist', () =>  getMusicasOfDirectory(path.join(os.homedir(), 'Music')))
+
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };

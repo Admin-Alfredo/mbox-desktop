@@ -1,11 +1,11 @@
-class Folder {
+export default class Folder {
   #files = []
   constructor(name, fulldirname) {
     this.dirname = name
     this.fulldirname = fulldirname
   }
   addTrack(track) {
-    if (!this.hasTrack(track)) {
+    if (!this.existTrack(track)) {
       this.#files.push(track)
     }
   }

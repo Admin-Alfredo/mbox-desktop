@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Folder from './class/Folder'
 FileList.prototype.map = Array.prototype.map
 
 function App() {
@@ -24,7 +25,9 @@ function App() {
       tracks.map(track => addTrackPlaylist(track))
     })
   }, [])
-
+  useEffect(function(){
+    console.log(folders)
+  },[folders])
   useEffect(() => {
     audio.current.addEventListener('ended', (e) => {
       handlerForwardTrackPlaylist(playlist)
@@ -61,14 +64,43 @@ function App() {
         .catch((err) => console.error("Erro iniciar a música", err.message))
     }
   }
-  const insertTrackRelativeFolder = function(track){
+  const addNewFolder = useCallback(function (folder) {
+    setFolders(items => {
+      const [hasFolder] = items.filter(item =>(
+        item.fulldirname == folder.fulldirname &&
+        item.dirname == folder.dirname
+      ))
+      if (!hasFolder) {
+        console.log(items, folder)
+        return [...items, folder]
+      }
+      return [...items]
+    })
+  }, [setFolders])
+
+  const insertTrackRelativeFolder = function (track) {
     
+    const [hasFolder] = folders.filter(folder => (
+      folder.fulldirname == track.fulldirname
+      // folder.dirname == track.dirname
+    ))
+    console.log(hasFolder)
+    if (!hasFolder) {
+      const folder = new Folder(track.dirname, track.fulldirname)
+      folder.addTrack(track)
+      addNewFolder(folder)
+      return;
+    }
+    hasFolder.addTrack(track)
+    addNewFolder(hasFolder)
   }
   const addTrackPlaylist = useCallback(function (track) {
+    
+    insertTrackRelativeFolder(track)
     setPlaylist(items => {
       const [hasFile] = items.filter(item => item.File.name == track.File.name)
       if (!hasFile) {
-        insertTrackRelativeFolder(track)
+        
         return [...items, track]
       }
       return [...items]
@@ -166,7 +198,7 @@ function App() {
       <button onClick={() => handlerPreviuesTrackPlaylist(playlist)}> previues track</button>
       <button onClick={handlerAudioPlay}>{isPlay ? "pause" : "play"}</button>
       <button onClick={() => handlerForwardTrackPlaylist(playlist)}>forward track</button>
-
+      <button onClick={() => console.log(folders)}>Get Folder</button>
       {/* <button onClick={() =>{
        
       }}> show dir user - {dirhome}</button> */}
