@@ -8,19 +8,31 @@ function App() {
   const [message, setMessage] = useState("Pressiona play para inicial a musica")
   const [isSearch, setIsSearch] = useState(false)
   const [playlist, setPlaylist] = useState([])
+  const [folders, setFolders] = useState([])
+  // {
+  //   dirname:
+  //   fulldirname:
+  //   files: [
+
+  //   ]
+  // }
   const [playlistSearch, setPlaylistSearch] = useState([])
-  const [dirhome, setDirhome] = useState('directory is empty!')
   const audio = useRef()
 
   useEffect(() => {
+    window.electronAPI.onUpdatePlaylist(function (tracks) {
+      tracks.map(track => addTrackPlaylist(track))
+    })
+  }, [])
 
+  useEffect(() => {
     audio.current.addEventListener('ended', (e) => {
       handlerForwardTrackPlaylist(playlist)
     })
     audio.current.onplay = () => setIsPlay(true)
     audio.current.onemptied = (e) => console.log(e)//audio loaded
 
-    window.onkeydown = function (e) { 
+    window.onkeydown = function (e) {
       if (e.key === "Enter") {
         const [trackSelectedForPlayer] = playlist.filter(track => track.selected)
         if (!trackSelectedForPlayer) return;
@@ -28,9 +40,7 @@ function App() {
       }
     }
 
-    window.electronAPI.onUpdatePlaylist(function(tracks){
-      tracks.map(track => addTrackPlaylist(track)) 
-    })
+
     // console.log
     // async function fetchMusicas() {
     //   setIsLoading(true)
@@ -51,10 +61,14 @@ function App() {
         .catch((err) => console.error("Erro iniciar a música", err.message))
     }
   }
+  const insertTrackRelativeFolder = function(track){
+    
+  }
   const addTrackPlaylist = useCallback(function (track) {
     setPlaylist(items => {
       const [hasFile] = items.filter(item => item.File.name == track.File.name)
       if (!hasFile) {
+        insertTrackRelativeFolder(track)
         return [...items, track]
       }
       return [...items]
