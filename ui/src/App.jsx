@@ -19,7 +19,9 @@ function App() {
   // }
   const [playlistSearch, setPlaylistSearch] = useState([])
   const audio = useRef()
-
+  useEffect(() => {
+    console.log(folders)
+  }, [folders])
   useEffect(() => {
     async function fetchMusicas() {
       setIsLoading(true)
@@ -27,6 +29,7 @@ function App() {
       setIsLoading(false)
       console.log(tracksOfUser)
       tracksOfUser.forEach(track => addTrackPlaylist(track))
+     
     }
     fetchMusicas()
   }, [])
@@ -70,8 +73,19 @@ function App() {
     })
   }, [setFolders])
 
-  const insertTrackRelativeFolder = function (track) {
-
+  const orderTrackRelativeFolder = function () {
+    const listForder = playlist.reduce((acumulador, track) => {
+      const [hasFolder] = acumulador.filter((folder) => folder.fulldirname == track.fulldirname)
+      if (!hasFolder) {
+        const newFolder = new Folder(track.dirname, track.fulldirname);
+        newFolder.addTrack(track)
+        acumulador.push(newFolder)
+        return acumulador
+      }
+      hasFolder.addTrack(track)
+      return acumulador
+    }, [])
+    setFolders([...listForder])
   }
 
   const addTrackPlaylist = useCallback(function (track) {
@@ -174,7 +188,7 @@ function App() {
       <button onClick={() => handlerPreviuesTrackPlaylist(playlist)}> previues track</button>
       <button onClick={handlerAudioPlay}>{isPlay ? "pause" : "play"}</button>
       <button onClick={() => handlerForwardTrackPlaylist(playlist)}>forward track</button>
-      <button onClick={() => console.log(folders)}>Get Folder</button>
+      <button onClick={() => orderTrackRelativeFolder()}>order Folder</button>
       {/* <button onClick={() =>{
        
       }}> show dir user - {dirhome}</button> */}
@@ -199,8 +213,17 @@ function App() {
         <div>
           <h2>{folder.dirname}</h2>
           <div style={{ padding: '0px 0px 0px 15px' }}>
-            {folder.getFiles().map(track => (
-              <div>{track.File.name}</div>
+            {folder.getFiles().map((track, index) => (
+              <div key={index}
+                title={track.source}
+                style={{ cursor: "pointer" }}
+                onDoubleClick={() => addTrackToPlayer(track)}
+                onClick={(event) => selectedTrack(track, event)}>
+                {index + 1} -
+                {track.isPlay ?
+                  <span style={{ color: 'red' }}> {track.File.name}</span> :
+                  <span style={{ color: track.selected ? 'blue' : 'black' }}>{track.File.name}</span>}
+              </div>
             ))}
           </div>
         </div>
