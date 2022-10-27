@@ -1,11 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const isDev = require("electron-is-dev")
-const path = require('path');
 const os = require('os');
-const { createReadStream, fstat, existsSync, stat } = require('fs');
-const { resolve } = require('path');
-const { statSync } = require('original-fs');
-const { getDirMusic } = require('./directory');
+const path = require('path');
+const { getMusicasOfDirectory } = require('./directory');
+const Track = require('./track');
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-next-line global-require
 if (require('electron-squirrel-startup')) {
@@ -23,18 +21,30 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  ipcMain.on('set-title', (event, title) => {
-    const webContents = event.sender
-    const win = BrowserWindow.fromWebContents(webContents)
-    win.setTitle(title)
-  })
+  // ipcMain.on('set-title', (event, title) => {
+  //   const webContents = event.sender
+  //   const win = BrowserWindow.fromWebContents(webContents)
+  //   win.setTitle(title)
+  // })
+
   // and load the index.html of the app.
   if (isDev) {
     mainWindow.loadURL(`http://127.0.0.1:5173/`)
   } else {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
   }
-
+  Track.emitter.on('add-track', (track) => {
+    // console.log(track)
+    mainWindow.webContents.send('update-playlist', track)
+  })
+  
+  // ipcMain.on('ready-get-track', (event, arg) => {
+  //   console.log(arg)
+  //   // Track.emitter.on('add-track', (track) => {
+  //     event.reply('update-playlist', {})
+  //   // })
+  //   // event.reply('update-playlist', 'pong')
+  // })  
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };
@@ -42,12 +52,15 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
-  ipcMain.handle('get:homedir', () => {
-   return getDirMusic()
-  })
+app.whenReady().then(() => {
   createWindow()
-});
+  getMusicasOfDirectory(path.join(os.homedir(), 'Music'))
+})
+// app.on('ready', () => {
+//   // ipcMain.handle('get:homedir', () => {
+//   //  return getDirMusic()
+//   // })
+// });
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

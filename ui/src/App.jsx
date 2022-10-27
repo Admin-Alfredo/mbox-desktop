@@ -20,7 +20,7 @@ function App() {
     audio.current.onplay = () => setIsPlay(true)
     audio.current.onemptied = (e) => console.log(e)//audio loaded
 
-    window.onkeydown = function (e) {
+    window.onkeydown = function (e) { 
       if (e.key === "Enter") {
         const [trackSelectedForPlayer] = playlist.filter(track => track.selected)
         if (!trackSelectedForPlayer) return;
@@ -28,14 +28,18 @@ function App() {
       }
     }
 
-    async function fetchMusicas() {
-      setIsLoading(true)
-      const tracksOfUser = await window.electronAPI.getHomedir()
-      setIsLoading(false)
-      console.log(tracksOfUser)
-      tracksOfUser.forEach(track => addTrackPlaylist(track))
-    }
-    fetchMusicas()
+    window.electronAPI.onUpdatePlaylist(function(tracks){
+      tracks.map(track => addTrackPlaylist(track)) 
+    })
+    // console.log
+    // async function fetchMusicas() {
+    //   setIsLoading(true)
+    //   const tracksOfUser = await window.electronAPI.getHomedir()
+    //   setIsLoading(false)
+    //   console.log(tracksOfUser)
+    //   tracksOfUser.forEach(track => addTrackPlaylist(track))
+    // }
+    // fetchMusicas()
   }, [])
   const handlerAudioPlay = function () {
     if (!audio.current.paused) {

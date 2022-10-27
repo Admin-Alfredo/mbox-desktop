@@ -1,5 +1,6 @@
 const { statSync } = require('fs')
 const path = require('path')
+const EventEmitter  = require('events')
 class Track{
   constructor(directory, filename){
     const ext = path.extname(filename)
@@ -15,4 +16,6 @@ class Track{
     this.type = `audio/${this.File.ext}`
   }
 }
+const eventsEmitter = new EventEmitter()
+Track.emitter = eventsEmitter
 module.exports = Track
