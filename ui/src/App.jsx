@@ -1,22 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Folder from './class/Folder'
+import Folder from './classes/Folder'
+import {MdPause} from 'react-icons/md'
 FileList.prototype.map = Array.prototype.map
 
 function App() {
   const [isPlay, setIsPlay] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [fileLoaded, setFileLoaded] = useState(0)
-  const [message, setMessage] = useState("Pressiona play para inicial a musica")
   const [isSearch, setIsSearch] = useState(false)
   const [playlist, setPlaylist] = useState([])
   const [folders, setFolders] = useState([])
-  // {
-  //   dirname:
-  //   fulldirname:
-  //   files: [
-
-  //   ]
-  // }
+  
   const [playlistSearch, setPlaylistSearch] = useState([])
   const audio = useRef()
   useEffect(() => {
@@ -24,12 +17,8 @@ function App() {
   }, [folders])
   useEffect(() => {
     async function fetchMusicas() {
-      setIsLoading(true)
       const tracksOfUser = await window.electronAPI.getTrackForUpdatePlaylist()
-      setIsLoading(false)
-      console.log(tracksOfUser)
       tracksOfUser.forEach(track => addTrackPlaylist(track))
-     
     }
     fetchMusicas()
   }, [])
@@ -196,7 +185,6 @@ function App() {
       <input onInput={handlerInputSearch}
         onFocus={() => setIsSearch(true)}
         onBlur={() => setIsSearch(false)} />
-      <p>{isLoading ? "Loading" : "Completed"}</p>
       {/* {(isSearch ? playlistSearch : playlist)?.map((track, index) => (
         <div key={index}
           title={track.source}
@@ -209,7 +197,7 @@ function App() {
             <span style={{ color: track.selected ? 'blue' : 'black' }}>{track.File.name}</span>}
         </div>
       ))} */}
-      {folders.map(folder => (
+      { folders.map(folder => (
         <div>
           <h2>{folder.dirname}</h2>
           <div style={{ padding: '0px 0px 0px 15px' }}>

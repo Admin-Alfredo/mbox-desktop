@@ -35,7 +35,8 @@ build/Release
 # Dependency directories
 ui/node_modules/
 window/node_modules/
-
+window/out/
+window/dist/
 jspm_packages/
 
 # TypeScript v1 declaration files

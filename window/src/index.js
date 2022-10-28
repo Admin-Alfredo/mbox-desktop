@@ -25,11 +25,11 @@ const createWindow = () => {
   if (isDev) {
     mainWindow.loadURL(`http://127.0.0.1:5173/`)
   } else {
-    mainWindow.loadFile(path.join(__dirname, 'index.html'));
+    mainWindow.loadURL(path.resolve(__dirname, '../dist/index.html'));
   }
  
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
