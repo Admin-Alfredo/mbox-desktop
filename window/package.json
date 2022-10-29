@@ -1,6 +1,6 @@
 {
-  "name": "window",
-  "productName": "window",
+  "name": "mbox",
+  "productName": "mbox",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
