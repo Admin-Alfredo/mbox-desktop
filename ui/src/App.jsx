@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import Folder from './classes/Folder'
+import NavbarMusicList from './components/NavbarListMusic'
 import Pane from './components/Pane'
 import AsideBar from './components/Pane'
 import TopBar from './components/TopBar'
-import { AppContainer, WrapperMain } from './styles'
+import { AppContainer, ContentPLayer, WrapperMain } from './styles'
 import { DarkTheme, GlobalStyles, LightTheme } from './styles/theme'
 FileList.prototype.map = Array.prototype.map
 
@@ -13,31 +14,35 @@ function App() {
   const isDarkTheme = theme == 'dark'
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
 
-  const [isOpenSideBar, setIsOpenSideBar] = useState(true)
+  const [isOpenSideBar1, setIsOpenSideBar1] = useState(true)
+  const [isOpenSideBar2, setIsOpenSideBar2] = useState(true)
   return (
     <ThemeProvider theme={isDarkTheme ? DarkTheme : LightTheme}>
       <>
         <GlobalStyles />
         <AppContainer>
-          <Pane
-            main
-            width="270px"
-            height="100%"
-            borderRight
-            modifyDimention="width"
-            isOpen={isOpenSideBar} />
+          <NavbarMusicList isOpen={isOpenSideBar1}/>
           <WrapperMain>
-           <TopBar></TopBar>
-          <button onClick={toggleTheme}>toggle theme {theme}</button>
-          <button onClick={() => setIsOpenSideBar(!isOpenSideBar)}>toggle</button>
+            <TopBar></TopBar>
+            <ContentPLayer>
+              <button onClick={toggleTheme}>toggle theme {theme}</button>
+              <button onClick={() => setIsOpenSideBar1(!isOpenSideBar1)}>toggle 1</button>
+              <button onClick={() => setIsOpenSideBar2(!isOpenSideBar2)}>toggle 2</button>
+            </ContentPLayer>
+            <Pane
+              main
+              width="100%"
+              height="110px"
+              borderLeft
+              modifyDimention="width" />
           </WrapperMain>
           <Pane
             main
-            width="270px"
+            width="200px"
             height="100%"
             borderLeft
             modifyDimention="width"
-            isOpen={isOpenSideBar}/>
+            isOpen={isOpenSideBar2} />
         </AppContainer>
       </>
     </ThemeProvider>

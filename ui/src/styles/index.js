@@ -13,4 +13,9 @@ export const AppContainer = styled.div`
 `
 export const WrapperMain = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+`
+export const ContentPLayer = styled.div`
+  flex: 1;
 `

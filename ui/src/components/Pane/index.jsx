@@ -10,11 +10,12 @@ export default function Pane(props) {
       borderRight={props.borderRight}
       borderBottom={props.borderBottom}
       main={props.main}
-      style={props.modifyDimention == 'height' ? { height: props.isOpen ? props.height : '0' } :
-        { width: props.isOpen ? props.width : '0' }}>
-        
-      <WrapperContent {...props}  >
-        <h1>Hello, World</h1>
+      style={props.modifyDimention == 'height' ?
+        { height: props.isOpen === true ? props.height : props.isOpen === undefined ? props.height : '0' } :
+        { width: props.isOpen === true ? props.width : props.isOpen === undefined ? props.width : '0' }}>
+
+      <WrapperContent {...props}>
+        {props.children}
       </WrapperContent>
     </Container>
   )

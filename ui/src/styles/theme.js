@@ -3,6 +3,9 @@ import { createGlobalStyle } from "styled-components"
 
 
 export const GlobalStyles = createGlobalStyle`
+  :root{
+    --color-primary: #007aff;
+  }
   @font-face {
     font-family: Roboto;
     src: url(/fontes/Roboto-Regular.ttf);
@@ -29,32 +32,70 @@ export const GlobalStyles = createGlobalStyle`
   body {
     background-color: ${({ theme }) => theme.body.backgroundColor};
     color: ${({ theme }) => theme.body.textColor};
+    font-size: 14pt;
   }
 `
-const borderWidth = '1px'
+const PaneBorderWidth = '1px'
+
 export const LightTheme = {
   body: {
     backgroundColor: '#FFFFFF',
-    textColor: '#C5C5C7'
+    textColor: '#393839'
   },
   pane: {
     backgroundPrimary: '#F2F2F7',
     backgroundSegundary: '#FFFFFF',
     borderColorPrimary : '#D5D5D9',
     borderColorSegundary: '#E0E0E0',
-    borderWidth
+    borderWidth: PaneBorderWidth
+  },
+  inputText: {
+    backgroundColor: '#FFFFFF',
+    backgroundColorFocus: 'transparent',
+    borderColor: '#E0E0E0',
+    borderColorFocus: '#C0D9FC',
+    textColorPlaceholder: '#C5C5C7',
+    textColor: '#000',
+    textColorFocus: '#000',
+    boxShadowColor: '#CECBCB',
+    boxShadowColorFocus: 'none',
+    borderWidth: '1px',
+    borderWidthFocus: '3px',
+    outlineColorFocus: '#C0D9FC',
+  },
+  dropdownList:{
+    textColorHover: "#FFF",
+    backgroundColorHoverListHeader: '#D5D5D9'
   }
 }
 export const DarkTheme = {
   body: {
     backgroundColor: '#1C1C1E',
-    textColor: '#5A5A5E'
+    textColor: '#FFF'
   },
   pane: {
     backgroundPrimary: '#2C2C2E',
     backgroundSegundary: '#1C1C1E',
     borderColorPrimary : '#464647',
     borderColorSegundary: '#383839',
-    borderWidth
+    borderWidth: PaneBorderWidth
+  },
+  inputText: {
+    backgroundColor: '#1E1E1E',
+    backgroundColorFocus: 'transparent',
+    borderColor: '#464444',
+    borderColorFocus: '#C0D9FC',
+    textColorPlaceholder: '#5A5A5E',
+    textColor: '#FFF',
+    textColorFocus: '#FFF',
+    boxShadowColor: '#202020',
+    boxShadowColorFocus: 'none',
+    borderWidth: '1px',
+    borderWidthFocus: '3px',
+    outlineColorFocus: '#1C4661' 
+  },
+  dropdownList:{
+    textColorHover: "#FFF",
+    backgroundColorHoverListHeader: '#333'
   }
 }
