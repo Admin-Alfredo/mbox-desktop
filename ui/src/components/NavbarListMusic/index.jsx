@@ -12,8 +12,14 @@ import {
 } from 'react-icons/md'
 import List from '../DropdownList'
 import DropdownList from '../DropdownList'
+import {
+  DropdownItem,
+  DropdownLabelItem
+} from '../DropdownList/styles'
+import WrapperIcon from '../WrapperIcon'
+
 export default function NavbarMusicList(props) {
-  const [isOpenDropdown,setIsOpenDropdown ] = useState(false)
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   return (
     <Container
       main
@@ -25,15 +31,28 @@ export default function NavbarMusicList(props) {
       <Header>
         <InputText Icon={MdSearch} />
       </Header>
-      <Body>
-        <DropdownList 
-          style={{ marginTop: '25px' }} 
-          isOpen={isOpenDropdown}
-          OnClickHeader={() => setIsOpenDropdown(!isOpenDropdown)}
-          IconHeader={MdFolder}
-          IconItems={MdAudiotrack}
-          OnDoubleClickItem={() => console.log("Double Click")}
-          />
+      <Body style={{ marginTop: '25px' }}>
+        <div>
+          {[1, 2, 3, 4, 5, 6, 1, 2].map(() =>
+            <DropdownList
+              isOpen={isOpenDropdown}
+              OnClickHeader={() => { }}
+              IconHeader={isOpenDropdown ? MdFolderOpen : MdFolder}
+              // renderHeader={}
+              labelHeader="opções"
+              dataItems={["editar", "selectiona", "cortar", "encontrar"]}
+              renderItem={(item) => (
+                <DropdownItem
+                  onClick={() => console.log("once clicked")}
+                  onDoubleClick={()=> console.log("double cliked")}>
+                  <WrapperIcon>
+                    <MdAudiotrack size={20} />
+                  </WrapperIcon>
+                  <DropdownLabelItem> {item}</DropdownLabelItem>
+                </DropdownItem>
+              )} />
+          )}
+        </div>
       </Body>
     </Container>
   )

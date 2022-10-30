@@ -5,6 +5,9 @@ import { createGlobalStyle } from "styled-components"
 export const GlobalStyles = createGlobalStyle`
   :root{
     --color-primary: #007aff;
+    --color-segundary: #dadadf;
+    --color-dismiss-primary: rgb(0, 123, 255, .5);
+    --color-dismiss-segundary: rgb(217, 217, 222, .5);
   }
   @font-face {
     font-family: Roboto;
@@ -38,6 +41,8 @@ export const GlobalStyles = createGlobalStyle`
 const PaneBorderWidth = '1px'
 
 export const LightTheme = {
+  colorPrimary: '#007aff',
+  colorSegundary: '#8e8e93',
   body: {
     backgroundColor: '#FFFFFF',
     textColor: '#393839'
@@ -45,7 +50,7 @@ export const LightTheme = {
   pane: {
     backgroundPrimary: '#F2F2F7',
     backgroundSegundary: '#FFFFFF',
-    borderColorPrimary : '#D5D5D9',
+    borderColorPrimary: '#D5D5D9',
     borderColorSegundary: '#E0E0E0',
     borderWidth: PaneBorderWidth
   },
@@ -63,12 +68,14 @@ export const LightTheme = {
     borderWidthFocus: '3px',
     outlineColorFocus: '#C0D9FC',
   },
-  dropdownList:{
+  dropdownList: {
     textColorHover: "#FFF",
     backgroundColorHoverListHeader: '#D5D5D9'
   }
 }
 export const DarkTheme = {
+  colorPrimary: '#0a84ff',
+  colorSegundary: '#dcdcdc',
   body: {
     backgroundColor: '#1C1C1E',
     textColor: '#FFF'
@@ -76,7 +83,7 @@ export const DarkTheme = {
   pane: {
     backgroundPrimary: '#2C2C2E',
     backgroundSegundary: '#1C1C1E',
-    borderColorPrimary : '#464647',
+    borderColorPrimary: '#464647',
     borderColorSegundary: '#383839',
     borderWidth: PaneBorderWidth
   },
@@ -88,13 +95,13 @@ export const DarkTheme = {
     textColorPlaceholder: '#5A5A5E',
     textColor: '#FFF',
     textColorFocus: '#FFF',
-    boxShadowColor: '#202020',
+    boxShadowColor: '#000',
     boxShadowColorFocus: 'none',
     borderWidth: '1px',
     borderWidthFocus: '3px',
-    outlineColorFocus: '#1C4661' 
+    outlineColorFocus: '#1C4661'
   },
-  dropdownList:{
+  dropdownList: {
     textColorHover: "#FFF",
     backgroundColorHoverListHeader: '#333'
   }

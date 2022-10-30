@@ -19,7 +19,7 @@ export const Container = styled.div`
     height: 35px;
     font-size: 15pt;
     padding: 5px 10px;
-    box-shadow: 0px 1px 0.1rem ${({theme}) => theme.inputText.boxShadowColor};
+    box-shadow: 0px 1px 0.001rem ${({theme}) => theme.inputText.boxShadowColor};
     transition:outline ease .15s;
   } 
   & input:focus{

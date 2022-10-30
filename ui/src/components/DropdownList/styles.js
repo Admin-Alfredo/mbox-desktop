@@ -4,13 +4,15 @@ export const Container = styled.ul`
   list-style:none;
 `
 
-export const SubList = styled.ul`
+export const List = styled.ul`
   position: relative;
   overflow: hidden;
   list-style:none;
   margin-left: 30px;
+  transition: all ease .19s;
+  transition-delay: .09s;
 `
-export const SubListContent = styled.div`
+export const ListContent = styled.div`
   position: relative;
   left:0;
   transition: top ease .19s;
@@ -18,9 +20,8 @@ export const SubListContent = styled.div`
 `
 export const ListHeader = styled.li`
   padding: 10px 7px;
-  font-family:Roboto-Bold;
+  font-family:Roboto-Light;
   border-radius: 11px;
-  cursor: pointer;
   /* height: 40px; */
   display: flex;
   align-items: center;
@@ -31,8 +32,9 @@ export const ListHeader = styled.li`
 
 export const ListHeaderLabel = styled.span`
   margin-left: 10px;
-`
-export const SubListItem = styled.li`
+` 
+export const DropdownItem = styled.li`
+  font-family:Roboto-Light;
   display: flex;
   align-items: center;
   padding: 10px 5px;
@@ -46,6 +48,6 @@ export const SubListItem = styled.li`
   }
 
 `
-export const SubListItemLabel = styled.span`
+export const DropdownLabelItem = styled.span`
 
 `

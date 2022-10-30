@@ -16,6 +16,6 @@ export const WrapperMain = styled.div`
   display: flex;
   flex-direction: column;
 `
-export const ContentPLayer = styled.div`
+export const PLayerActivity = styled.div`
   flex: 1;
 `

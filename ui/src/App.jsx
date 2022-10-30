@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import Folder from './classes/Folder'
+import Button from './components/Button'
 import NavbarMusicList from './components/NavbarListMusic'
 import Pane from './components/Pane'
 import AsideBar from './components/Pane'
+import Player from './components/Player'
 import TopBar from './components/TopBar'
-import { AppContainer, ContentPLayer, WrapperMain } from './styles'
+import { AppContainer, PLayerActivity, WrapperMain } from './styles'
 import { DarkTheme, GlobalStyles, LightTheme } from './styles/theme'
 FileList.prototype.map = Array.prototype.map
 
@@ -21,20 +23,15 @@ function App() {
       <>
         <GlobalStyles />
         <AppContainer>
-          <NavbarMusicList isOpen={isOpenSideBar1}/>
+          <NavbarMusicList isOpen={isOpenSideBar1} />
           <WrapperMain>
-            <TopBar></TopBar>
-            <ContentPLayer>
-              <button onClick={toggleTheme}>toggle theme {theme}</button>
-              <button onClick={() => setIsOpenSideBar1(!isOpenSideBar1)}>toggle 1</button>
-              <button onClick={() => setIsOpenSideBar2(!isOpenSideBar2)}>toggle 2</button>
-            </ContentPLayer>
-            <Pane
-              main
-              width="100%"
-              height="110px"
-              borderLeft
-              modifyDimention="width" />
+            <TopBar/>
+            <PLayerActivity>
+              <Button large onClick={toggleTheme}>toggle theme {theme}</Button>
+              <Button onClick={() => setIsOpenSideBar1(!isOpenSideBar1)}>toggle 1</Button>
+              <Button large segundary onClick={() => setIsOpenSideBar2(!isOpenSideBar2)}>toggle 2</Button>
+            </PLayerActivity>
+            <Player />
           </WrapperMain>
           <Pane
             main

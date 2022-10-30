@@ -1,10 +1,12 @@
 import React from 'react'
-import { Container } from './styles'
+import { Container, Overlap } from './styles'
 
 export default function WrapperIcon(props) {
+
   return (
-   <Container {...props}>
+    <Container {...props} onClick={null}>
+      <Overlap onClick={props.onClick && props.onClick} />
       {props.children}
-   </Container>
+    </Container>
   )
 }
