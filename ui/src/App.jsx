@@ -7,6 +7,7 @@ import Pane from './components/Pane'
 import AsideBar from './components/Pane'
 import Player from './components/Player'
 import TopBar from './components/TopBar'
+import { TrackProvider } from './context/trackContext'
 import { AppContainer, PLayerActivity, WrapperMain } from './styles'
 import { DarkTheme, GlobalStyles, LightTheme } from './styles/theme'
 FileList.prototype.map = Array.prototype.map
@@ -19,30 +20,32 @@ function App() {
   const [isOpenSideBar1, setIsOpenSideBar1] = useState(true)
   const [isOpenSideBar2, setIsOpenSideBar2] = useState(true)
   return (
-    <ThemeProvider theme={isDarkTheme ? DarkTheme : LightTheme}>
-      <>
-        <GlobalStyles />
-        <AppContainer>
-          <NavbarMusicList isOpen={isOpenSideBar1} />
-          <WrapperMain>
-            <TopBar/>
-            <PLayerActivity>
-              <Button large onClick={toggleTheme}>toggle theme {theme}</Button>
-              <Button onClick={() => setIsOpenSideBar1(!isOpenSideBar1)}>toggle 1</Button>
-              <Button large segundary onClick={() => setIsOpenSideBar2(!isOpenSideBar2)}>toggle 2</Button>
-            </PLayerActivity>
-            <Player />
-          </WrapperMain>
-          <Pane
-            main
-            width="200px"
-            height="100%"
-            borderLeft
-            modifyDimention="width"
-            isOpen={isOpenSideBar2} />
-        </AppContainer>
-      </>
-    </ThemeProvider>
+    <TrackProvider>
+      <ThemeProvider theme={isDarkTheme ? DarkTheme : LightTheme}>
+        <>
+          <GlobalStyles />
+          <AppContainer>
+            <NavbarMusicList isOpen={isOpenSideBar1} />
+            <WrapperMain>
+              <TopBar />
+              <PLayerActivity>
+                <Button large onClick={toggleTheme}>toggle theme {theme}</Button>
+                <Button onClick={() => setIsOpenSideBar1(!isOpenSideBar1)}>toggle 1</Button>
+                <Button large segundary onClick={() => setIsOpenSideBar2(!isOpenSideBar2)}>toggle 2</Button>
+              </PLayerActivity>
+              <Player />
+            </WrapperMain>
+            <Pane
+              main
+              width="200px"
+              height="100%"
+              borderLeft
+              modifyDimention="width"
+              isOpen={isOpenSideBar2} />
+          </AppContainer>
+        </>
+      </ThemeProvider>
+    </TrackProvider>
   )
 }
 // const [isPlay, setIsPlay] = useState(false)
@@ -103,20 +106,7 @@ function App() {
 //   })
 // }, [setFolders])
 
-// const orderTrackRelativeFolder = function () {
-//   const listForder = playlist.reduce((acumulador, track) => {
-//     const [hasFolder] = acumulador.filter((folder) => folder.fulldirname == track.fulldirname)
-//     if (!hasFolder) {
-//       const newFolder = new Folder(track.dirname, track.fulldirname);
-//       newFolder.addTrack(track)
-//       acumulador.push(newFolder)
-//       return acumulador
-//     }
-//     hasFolder.addTrack(track)
-//     return acumulador
-//   }, [])
-//   setFolders([...listForder])
-// }
+
 
 // const addTrackPlaylist = useCallback(function (track) {
 //   setPlaylist(items => {

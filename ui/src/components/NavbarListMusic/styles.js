@@ -6,7 +6,7 @@ export const Container = styled(Pane)`
   flex-direction: column;
 `
 export const Header = styled.header`
-  margin-top: 60px;
+  margin-top: var(--height-toolbar);
   padding: 0px 10px;
 `
 export const Body = styled.header`

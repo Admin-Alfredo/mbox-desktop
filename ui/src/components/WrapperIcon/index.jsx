@@ -4,8 +4,8 @@ import { Container, Overlap } from './styles'
 export default function WrapperIcon(props) {
 
   return (
-    <Container {...props} onClick={null}>
-      <Overlap onClick={props.onClick && props.onClick} />
+    <Container {...props} >
+      <Overlap  />
       {props.children}
     </Container>
   )

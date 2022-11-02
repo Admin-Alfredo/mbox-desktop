@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-segundary: #dadadf;
     --color-dismiss-primary: rgb(0, 123, 255, .5);
     --color-dismiss-segundary: rgb(217, 217, 222, .5);
+    --height-toolbar: 40px;
   }
   @font-face {
     font-family: Roboto;
@@ -43,6 +44,7 @@ const PaneBorderWidth = '1px'
 export const LightTheme = {
   colorPrimary: '#007aff',
   colorSegundary: '#8e8e93',
+
   body: {
     backgroundColor: '#FFFFFF',
     textColor: '#393839'

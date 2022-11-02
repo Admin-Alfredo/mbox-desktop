@@ -19,7 +19,7 @@ export default function DropdownList(props) {
   useEffect(function () {
     setHeightSubListContent(SubListContentDOM.current.getBoundingClientRect().height)
   }, [])
- 
+
   return (
     <Container {...props}>
       <ListHeader
@@ -38,7 +38,7 @@ export default function DropdownList(props) {
           </WrapperIcon>}
         <ListHeaderLabel>{props.labelHeader && props.labelHeader}</ListHeaderLabel>
       </ListHeader>
-      <List style={{ height: isOpen ?  `${heightSubListContent}px` : '0px' }}>
+      <List style={{ height: isOpen ? `${heightSubListContent}px` : '0px' }}>
         <ListContent ref={SubListContentDOM} style={{ top: isOpen ? '0px' : `${-heightSubListContent}px` }}>
           {props.dataItems?.map(item => props.renderItem && props.renderItem(item))}
         </ListContent>
