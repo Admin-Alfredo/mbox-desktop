@@ -32,7 +32,9 @@ export default function Player() {
     TagAudio.current.onplay = () => setIsPlay(true)
     TagAudio.current.onpause = () => setIsPlay(false)
     TagAudio.current.onemptied = (e) => console.log(e)//audio loaded
-
+    TagAudio.current.onended = function () { 
+      this.play().then(() => console.log("Repeat music."))
+     }
     // window.onkeydown = function (e) {
     //   if (e.key === "Enter") {
     //     const [trackSelectedForPlayer] = playlist.filter(track => track.selected)
@@ -63,6 +65,7 @@ export default function Player() {
     <Container
       width="100%"
       height="80px"
+      minHeight="80px"
       borderTop
       modifyDimention="width">
       <audio

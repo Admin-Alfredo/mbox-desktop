@@ -1,24 +1,23 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
-import Folder from './classes/Folder'
-import Button from './components/Button'
 import NavbarMusicList from './components/NavbarListMusic'
 import Pane from './components/Pane'
-import AsideBar from './components/Pane'
 import Player from './components/Player'
 import TopBar from './components/TopBar'
+import PlayerActivity from './components/PlayerActivity'
+
 import { TrackProvider } from './context/trackContext'
-import { AppContainer, PLayerActivity, WrapperMain } from './styles'
+import { AppContainer, WrapperMain } from './styles'
 import { DarkTheme, GlobalStyles, LightTheme } from './styles/theme'
 FileList.prototype.map = Array.prototype.map
 
 function App() {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState('light')
   const isDarkTheme = theme == 'dark'
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
 
   const [isOpenSideBar1, setIsOpenSideBar1] = useState(true)
-  const [isOpenSideBar2, setIsOpenSideBar2] = useState(true)
+  const [isOpenSideBar2, setIsOpenSideBar2] = useState(false)
   return (
     <TrackProvider>
       <ThemeProvider theme={isDarkTheme ? DarkTheme : LightTheme}>
@@ -28,11 +27,7 @@ function App() {
             <NavbarMusicList isOpen={isOpenSideBar1} />
             <WrapperMain>
               <TopBar />
-              <PLayerActivity>
-                <Button large onClick={toggleTheme}>toggle theme {theme}</Button>
-                <Button onClick={() => setIsOpenSideBar1(!isOpenSideBar1)}>toggle 1</Button>
-                <Button large segundary onClick={() => setIsOpenSideBar2(!isOpenSideBar2)}>toggle 2</Button>
-              </PLayerActivity>
+              <PlayerActivity/>
               <Player />
             </WrapperMain>
             <Pane

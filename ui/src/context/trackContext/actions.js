@@ -22,14 +22,13 @@ export default {
     try{
       response = await fetch(track.source, {'Content-Type':'audio/*', 'accept': 'blob'})
       const blob = await response.blob()
-      console.log(blob)
       const posters = await getPosterTrack(blob)
-      console.log(posters)
-      // track.posters = posters
+      track.posters = posters
       return { ...state, playlist, playing: track }
     }catch(err){
-
-      console.log("00000000000000000000============", err.message)
+      //ERRO AO PEGAR IMAGEN
+      track.posters = ["/audio/default-poster.jpg"]
+      return { ...state, playlist, playing: track }
     }
   }
 }

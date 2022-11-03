@@ -27,7 +27,7 @@ const createWindow = () => {
   if (isDev) {
     mainWindow.loadURL(`http://127.0.0.1:5173/`)
   } else {
-    mainWindow.loadURL(path.resolve(__dirname, '../dist/index.html'));
+    mainWindow.loadURL(path.resolve(__dirname, '../build/index.html'));
   }
  
   // Open the DevTools.

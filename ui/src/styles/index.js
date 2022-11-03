@@ -12,7 +12,7 @@ export const AppContainer = styled.div`
   display: flex;
 `
 export const WrapperMain = styled.div`
-  flex: 1;
+  flex: 5 0 600px;
   display: flex;
   flex-direction: column;
 `
