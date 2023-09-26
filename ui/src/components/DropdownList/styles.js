@@ -26,25 +26,29 @@ export const ListHeader = styled.li`
   display: flex;
   align-items: center;
   &:hover{
-    background-color: ${({theme}) => theme.dropdownList.backgroundColorHoverListHeader};
+    background-color: ${({ theme }) => theme.dropdownList.backgroundColorHoverListHeader};
   }
 `
 
 export const ListHeaderLabel = styled.span`
   margin-left: 10px;
-` 
+`
 export const DropdownItem = styled.li`
   font-family:Roboto-Light;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px 5px;
   cursor: pointer;
   border-radius: 11px;
-  background-color: ${props => props.isActived == true? 'var(--color-primary)' : 'transparent'};
-  color:  ${props => props.isActived == true? props.theme.dropdownList.textColorHover : 'auto'};
+  background-color: ${props => props.isActived == true ? 'var(--color-primary)' : 'transparent'};
+  color:  ${props => props.isActived == true ? props.theme.dropdownList.textColorHover : 'auto'};
   &:hover{
     background-color: var(--color-primary);
-    color: ${({theme}) => theme.dropdownList.textColorHover}
+    color: ${({ theme }) => theme.dropdownList.textColorHover}
+  }
+  & > span{
+    flex: 2;
   }
 
 `

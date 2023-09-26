@@ -44,25 +44,18 @@ export default function NavbarMusicList(props) {
               IconHeader={isOpenDropdown ? MdFolderOpen : MdFolder}
               labelHeader={folder.dirname}
               dataItems={[...folder.getFiles()]}
-              renderItem={(track, key) => {
-                // const dropdownItemDOM = useRef(null)
-                // useEffect(() => {
-                //   console.log(dropdownItemDOM.current)
-                // }, [])
-                return (
-                  <DropdownItem
-                    // ref={dropdownItemDOM}
-                    key={key}
-                    onClick={() => console.log("once clicked")}
-                    onDoubleClick={() => void dispatch({ type: "setPlayingTrack", payload: track })}
-                    className={track.isPlay && 'active'}>
-                    <WrapperIcon>
-                      <MdAudiotrack size={20} />
-                    </WrapperIcon>
-                    <DropdownLabelItem> {track.File.name}</DropdownLabelItem>
-                  </DropdownItem>
-                )
-              }} />
+              renderItem={(track, key) => (
+                <DropdownItem
+                  key={key}
+                  onClick={() => console.log("once clicked")}
+                  onDoubleClick={() => void dispatch({ type: "setPlayingTrack", payload: track })}
+                  className={track.isPlay && 'active'}>
+                  <WrapperIcon>
+                    <MdAudiotrack size={20} />
+                  </WrapperIcon>
+                  <DropdownLabelItem> {track.File.name}</DropdownLabelItem>
+                </DropdownItem>
+              )} />
           )}
         </div>
       </Body>

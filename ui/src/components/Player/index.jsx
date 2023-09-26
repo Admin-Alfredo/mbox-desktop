@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import {
   Container,
   WrapperProgressBar,
@@ -14,6 +14,7 @@ import {
 } from 'react-icons/bs'
 import TrackContext from '../../context/trackContext'
 import WrapperIcon from '../WrapperIcon'
+import { handlerForwardTrackPlaylist, handlerPreviuesTrackPlaylist } from './handlers'
 
 export default function Player() {
 
@@ -32,9 +33,9 @@ export default function Player() {
     TagAudio.current.onplay = () => setIsPlay(true)
     TagAudio.current.onpause = () => setIsPlay(false)
     TagAudio.current.onemptied = (e) => console.log(e)//audio loaded
-    TagAudio.current.onended = function () { 
+    TagAudio.current.onended = function () {
       this.play().then(() => console.log("Repeat music."))
-     }
+    }
     // window.onkeydown = function (e) {
     //   if (e.key === "Enter") {
     //     const [trackSelectedForPlayer] = playlist.filter(track => track.selected)
@@ -59,7 +60,18 @@ export default function Player() {
         .catch((err) => console.error("Erro iniciar a música", err.message))
     }
   }
-
+  // const addTrackToPlayer = useCallback(function (track) {
+  //   setPlaylist(items => items.map(item => {
+  //     if (track.File.name == item.File.name) {
+  //       item.isPlay = true;
+  //       audio.current.type = track.File.type
+  //       audio.current.src = track.source
+  //       return item
+  //     }
+  //     item.isPlay = false;
+  //     return item
+  //   }))
+  // }, [setPlaylist])
 
   return (
     <Container
@@ -77,13 +89,17 @@ export default function Player() {
       </WrapperProgressBar>
       <WrapperControlls>
         <ControlMain>
-          <Chevron><BsChevronLeft size={30} /></Chevron>
+          <Chevron onClick={() => handlerPreviuesTrackPlaylist(state.playlist, dispatch)}>
+            <BsChevronLeft size={30} />
+          </Chevron>
           <WrapperIcon
             style={{ width: '60px', height: '60px', cursor: ' pointer' }}
             onClick={() => handlerAudioPlay()}>
             {isPlay ? <MdPause size={40} /> : <MdPlayArrow size={40} />}
           </WrapperIcon>
-          <Chevron><BsChevronRight size={30} /></Chevron>
+          <Chevron onClick={() => handlerForwardTrackPlaylist(state.playlist, dispatch)} >
+            <BsChevronRight size={30} />
+          </Chevron>
         </ControlMain>
       </WrapperControlls>
     </Container>

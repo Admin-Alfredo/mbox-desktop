@@ -12,7 +12,7 @@ import { DarkTheme, GlobalStyles, LightTheme } from './styles/theme'
 FileList.prototype.map = Array.prototype.map
 
 function App() {
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState('dark')
   const isDarkTheme = theme == 'dark'
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
 
