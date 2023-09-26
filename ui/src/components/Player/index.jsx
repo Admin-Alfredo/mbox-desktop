@@ -5,7 +5,8 @@ import {
   WrapperControlls,
   ControlMain,
   Chevron,
-  Play
+  Play,
+  ProgressBar
 } from './styles'
 import { MdPause, MdPlayArrow } from 'react-icons/md'
 import {
@@ -24,7 +25,6 @@ export default function Player() {
   const { state, dispatch } = useContext(TrackContext)
   const TagAudio = useRef(null)
 
-  console.log(state)
   useEffect(() => {
     console.log(TagAudio.current)
     // TagAudio.current.addEventListener('ended', (e) => {
@@ -60,6 +60,12 @@ export default function Player() {
         .catch((err) => console.error("Erro iniciar a música", err.message))
     }
   }
+  const handlerChangeProgress = (e) => {
+    const currentSelectedArea = e.clientX - e.currentTarget.getBoundingClientRect().x;// area selecionado em pixa
+    const currentSelectedArea_p = Math.round((currentSelectedArea * 100) / e.currentTarget.getBoundingClientRect().width)
+    console.log(e.currentTarget.children[0])
+    e.currentTarget.children[0].style.width = ` ${currentSelectedArea_p}%`
+  }
   // const addTrackToPlayer = useCallback(function (track) {
   //   setPlaylist(items => items.map(item => {
   //     if (track.File.name == item.File.name) {
@@ -80,12 +86,9 @@ export default function Player() {
       minHeight="80px"
       borderTop
       modifyDimention="width">
-      <audio
-        autoPlay
-        ref={TagAudio}>
-      </audio>
-      <WrapperProgressBar>
-
+      <audio autoPlay ref={TagAudio} ></audio>
+      <WrapperProgressBar onClick={handlerChangeProgress}>
+        <ProgressBar />
       </WrapperProgressBar>
       <WrapperControlls>
         <ControlMain>
